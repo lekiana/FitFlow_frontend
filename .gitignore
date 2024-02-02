@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/src/App.test.js
+/src/reportWebVitals.js
+/src/setupTests.js
+
+.eslintrc.js
