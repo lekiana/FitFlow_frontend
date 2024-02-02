@@ -1,21 +1,19 @@
-import React from "react";
-import "./App.css";
-import DashboardContainer from "./containers/DashboardContainer";
-import MeansContainer from "./containers/MeansContainer";
-import UsersContainer from "./containers/UsersContainer";
-import BudgetContainer from "./containers/BudgetContainer";
-import SignIn from "./containers/SignIn";
-import Login from "./containers/Login";
-import NewCompany from "./containers/NewCompany";
-import Home from "./containers/Home";
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import PrivateRoute from "./auth/privateRoute";
+import React from "react"
+import "./App.css"
+import DashboardContainer from "./containers/DashboardContainer"
+import MeansContainer from "./containers/MeansContainer"
+import UsersContainer from "./containers/UsersContainer"
+import BudgetContainer from "./containers/BudgetContainer"
+import SignIn from "./containers/SignIn"
+import SignUp from "./containers/SignUp"
+import NewCompany from "./containers/NewCompany"
+import Home from "./containers/Home"
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import PrivateRoute from "./auth/privateRoute"
 
 const App = () => (
     <BrowserRouter>
       <Routes>
-        {/* <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Route path="/" component={authenticated ? Home : Login} /> */}
 
         <Route
           path="/"
@@ -32,16 +30,16 @@ const App = () => (
         />
 
         <Route
-          path="/signup"
+          path="/newaccount"
           element={
-            <Login/>
+            <NewCompany/>
           }
         />
 
         <Route
-          path="/newaccount"
+          path="/signup"
           element={
-            <NewCompany/>
+            <SignUp/>
           }
         />
 

@@ -1,35 +1,49 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import TemporaryDrawer from '../components/TemporaryDrawer';
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import MenuItem from '@mui/material/MenuItem'
+import Menu from '@mui/material/Menu'
+import TemporaryDrawer from '../components/TemporaryDrawer'
+import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import AuthContext from '../auth/AuthContext'
+
 
 export default function NavBar() {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [auth, setAuth] = React.useState(true)
+  const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+    setAuth(event.target.checked)
+  }
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
-  };
+  }
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
+  }
+
+  const authCtx = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    authCtx.logout()
+    navigate("/")
+  }
+
+  const company_name = localStorage.getItem("company-name")
 
   return (
     <AppBar position="static" sx={{backgroundColor: "#01579b"}}>
       <Toolbar>
         <TemporaryDrawer />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Company name
+          {company_name}
         </Typography>
         
         {auth && (
@@ -60,11 +74,11 @@ export default function NavBar() {
             onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         )}
       </Toolbar>
     </AppBar>
-  );
+  )
 }

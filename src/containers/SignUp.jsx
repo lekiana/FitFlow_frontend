@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,15 +12,16 @@ import Container from '@mui/material/Container';
 import API from '../api/apiClient';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import AuthContext from '../auth/AuthContext';
+import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        FitFlow
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,31 +29,44 @@ function Copyright(props) {
   );
 }
 
+function UserErrorAlert(mess) {
+  return <Alert severity="error">{mess}</Alert>
+}
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export default function SignUp() {
+  const [alert, setAlert] = useState(null)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const authCtx = useContext(AuthContext)
   const navigate = useNavigate()
   const location = useLocation()
 
-  const to = location.state || { pathname: "/newaccount" }
+  const to = location.state || { pathname: "/dashboard" }
+
+  const authCtx = useContext(AuthContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
+    const group = localStorage.getItem("company_group")
+    data.append('groups', group)
 
-    await API.createUser(data)
+    try {
+      await API.createUser(data)
+    } catch (error) {
+      console.log(error)
+      setAlert(UserErrorAlert(error.response.data.error_msg))
+    }
 
     if (!authCtx.authenticated) {
       try {
         const res = await authCtx.getToken(username, password)
-        await authCtx.login({ token: res.data.token })
+        await authCtx.login({ token: res.data.token, user: res.data.user })
         navigate(to, { replace: true, state: to })
         setUsername("")
         setPassword("")
@@ -67,6 +79,7 @@ export default function Login() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+        {alert}
         <CssBaseline />
         <Box
           sx={{
@@ -158,8 +171,8 @@ export default function Login() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
-  );
+  )
 }

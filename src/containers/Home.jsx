@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './Dashboard.css';
+import './styles.css';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ export default function Home() {
 
   const handleSignUp = () => {
     // Navigate to the '/another-page' URL when the button is clicked
-    navigate('/signup');
+    navigate('/newaccount');
   };
 
   const handleSignIn = () => {
@@ -23,6 +23,7 @@ export default function Home() {
       <div className='buttons'>
       <Stack spacing={5} direction="row">
         <Button
+            id="sign-in"
             size="medium"
             variant="contained"
             onClick={handleSignIn}
@@ -30,6 +31,7 @@ export default function Home() {
             Sign In
           </Button>
           <Button
+            id="sign-up"
             size="medium"
             variant="contained"
             onClick={handleSignUp}

@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,14 +11,22 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import API from '../api/apiClient';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import AuthContext from '../auth/AuthContext';
+import Alert from '@mui/material/Alert';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        FitFlow
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -34,18 +40,23 @@ const defaultTheme = createTheme();
 
 export default function NewCompany() {
 
-  const navigate = useNavigate()
-
   const getGroup = async (data) => {return API.createGroup({name: data.get('name')})}
+  const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
+
     const group = await getGroup(data)
     data.append('group', group.data.id)
-    API.createCompany(data)
-    navigate('/dashboard')
-  };
+
+    const company = await API.createCompany(data)
+
+    if (company){
+      localStorage.setItem("company_group", company.data.group)
+      navigate('/signup')
+    }
+  }
 
   return (//Register your company
     <ThemeProvider theme={defaultTheme}>
@@ -80,14 +91,22 @@ export default function NewCompany() {
               </Grid>
 
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="currency"
-                  label="Default Curency"
-                  name="currency"
-                  autoComplete="default-currency"
-                />
+              <FormControl fullWidth required>
+            <InputLabel id="demo-simple-select-label">Currency</InputLabel>
+            <Select
+                labelId="currency"
+                id="currency"
+                name="currency"
+                label="Currency"
+            >
+              <MenuItem key={'PLN'} value={1}>
+                  PLN
+              </MenuItem>
+              <MenuItem key={'EUR'} value={2}>
+                  EUR
+              </MenuItem>
+            </Select>
+            </FormControl>
               </Grid>
             </Grid>
             <Button
@@ -102,8 +121,8 @@ export default function NewCompany() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
-  );
+  )
 }
