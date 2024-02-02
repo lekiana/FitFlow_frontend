@@ -45,14 +45,12 @@ const App = () => (
 
         <Route
           path="/dashboard"
-          element={
-            
+          element={            
             <div className="main">
             <PrivateRoute>
             <DashboardContainer/>
             </PrivateRoute>
             </div>
-            
           }
         />
 
@@ -70,11 +68,9 @@ const App = () => (
         <Route
           path="/users"
           element={
-            
             <div className="main">
               <PrivateRoute>
             <UsersContainer/>
-            
             </PrivateRoute>
             </div>
           }
@@ -83,7 +79,6 @@ const App = () => (
         <Route
           path="/budget"
           element={
-            
             <div className="main">
               <PrivateRoute>
             <BudgetContainer/>
