@@ -1,15 +1,15 @@
-import React from "react";
-import "./App.css";
-import DashboardContainer from "./containers/DashboardContainer";
-import MeansContainer from "./containers/MeansContainer";
-import UsersContainer from "./containers/UsersContainer";
-import BudgetContainer from "./containers/BudgetContainer";
-import SignIn from "./containers/SignIn";
-import SignUp from "./containers/SignUp";
-import NewCompany from "./containers/NewCompany";
-import Home from "./containers/Home";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import PrivateRoute from "./auth/privateRoute";
+import React from "react"
+import "./App.css"
+import DashboardContainer from "./containers/DashboardContainer"
+import MeansContainer from "./containers/MeansContainer"
+import UsersContainer from "./containers/UsersContainer"
+import BudgetContainer from "./containers/BudgetContainer"
+import SignIn from "./containers/SignIn"
+import SignUp from "./containers/SignUp"
+import NewCompany from "./containers/NewCompany"
+import Home from "./containers/Home"
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import PrivateRoute from "./auth/privateRoute"
 
 const App = () => (
     <BrowserRouter>
