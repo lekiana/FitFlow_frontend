@@ -1,36 +1,16 @@
-import React from 'react';
-import { Navigate, Route, useLocation } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-import { Box, CircularProgress } from '@mui/material';
-
-
-const CircularProgressCentered = () => (
-  <Box
-   // bgcolor="background.default"
-   display="flex"
-   justifyContext="center"
-   padding="40px"
-   height="100hv"
-   >
-    <CircularProgress/>
-   </Box>
-)
+import React from 'react'
+import { Navigate, Route, useLocation } from 'react-router-dom'
+import { useAuth } from './AuthContext'
 
 const PrivateRoute = ({ children }) => {
-const { authenticated } = useAuth()
-const location = useLocation()
+  const { authenticated } = useAuth()
+  const location = useLocation()
 
-return authenticated ? (
-  <React.Suspense fallback={<CircularProgressCentered />}>{children}</React.Suspense>
-) : (
-  <Navigate to="/" replace state={{ from: location }} />
-)
-
-  // if (!authenticated) {
-  //   return <Navigate to="/" replace />;
-  // }
-
-  // return children;
+  return authenticated ? (
+    <React.Suspense>{children}</React.Suspense>
+  ) : (
+    <Navigate to="/" replace state={{ from: location }} />
+  )
 }
 
-export default PrivateRoute;
+export default PrivateRoute

@@ -1,18 +1,17 @@
 import * as React from 'react';
-import './Dashboard.css';
-import UsersTable from '../components/UsersTable';
+import './styles.css';
+import UsersTable from '../components/users/UsersTable';
 import NavBar from '../components/NavBar';
 
 export default function UsersContainer() {
 
   return (
-    <div>
-    <NavBar/>
-    <div className="bottom-means">
-    <UsersTable/>
+    <div style={{ height: '100vh' }}>
+      <NavBar/>
+      <div className="bottom-means">
+        <UsersTable/>
+      </div>
     </div>
-    </div>
-
-  );
+  )
 }
 
